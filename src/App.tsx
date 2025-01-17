@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Volume2, Download, Play, Pause, Globe2 } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Globe2, Play, Pause, Download } from 'lucide-react';
 import axios from 'axios';
 
 function App() {

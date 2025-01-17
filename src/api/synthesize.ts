@@ -1,35 +1,38 @@
 import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 import { Request, Response } from 'express';
 
-// Initialize the client with credentials
-const client = new TextToSpeechClient({
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
-});
+const client = new TextToSpeechClient();
 
-export default async function handler(req: Request, res: Response) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+export const synthesize = async (req: Request, res: Response) => {
   try {
     const { text, languageCode, voiceName } = req.body;
+    console.log('Backend: Received request:', { text, languageCode, voiceName });
 
     const request = {
       input: { text },
       voice: {
-        languageCode,
+        languageCode: languageCode || 'en-US',
         name: voiceName,
       },
-      audioConfig: { audioEncoding: 'MP3' },
+      audioConfig: {
+        audioEncoding: "MP3" as const,
+      },
     };
 
     const [response] = await client.synthesizeSpeech(request);
-    const audioContent = response.audioContent;
+    
+    if (!response?.audioContent) {
+      throw new Error('No audio content received from Google Cloud');
+    }
 
-    res.setHeader('Content-Type', 'audio/mp3');
-    res.send(audioContent);
+    res.set('Content-Type', 'audio/mpeg');
+    res.send(response.audioContent);
+
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Failed to synthesize speech' });
+    console.error("Backend: Error in Text-to-Speech:", error);
+    res.status(500).json({ 
+      error: "Failed to convert text to speech",
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
-}
+};
