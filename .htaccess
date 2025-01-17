@@ -1,16 +1,20 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    RewriteRule ^index\.html$ - [L]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-l
-    RewriteRule . /index.html [L]
+# Enable rewrite engine
+RewriteEngine On
 
-    # Handle API requests
-    RewriteCond %{REQUEST_URI} ^/api/
-    RewriteRule ^api/(.*)$ /api.php [L]
-</IfModule>
+# Handle static files in dist directory
+RewriteCond %{REQUEST_URI} !^/dist/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /dist/$1 [L]
+
+# If the file doesn't exist in dist, redirect to index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
+
+# Handle API requests
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^api/(.*)$ api.php [L]
 
 # PHP settings
 <IfModule mod_php.c>
