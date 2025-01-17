@@ -1,7 +1,16 @@
 {
-    "name": "text-to-speech-app",
+    "name": "tahazafark/text-to-speech-app",
     "description": "Text to Speech Application",
+    "type": "project",
     "require": {
         "php": ">=7.4"
-    }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taha Zafar",
+            "email": "your.email@example.com"
+        }
+    ],
+    "minimum-stability": "stable"
 } 
