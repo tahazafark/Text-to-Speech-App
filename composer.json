@@ -1,0 +1,7 @@
+{
+    "name": "text-to-speech-app",
+    "description": "Text to Speech Application",
+    "require": {
+        "php": ">=7.4"
+    }
+} 
