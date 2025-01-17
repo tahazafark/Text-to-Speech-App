@@ -8,5 +8,13 @@ export default defineConfig({
     assetsDir: 'assets',
     emptyOutDir: true,
   },
-  base: './'
+  base: '/',
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://tahak.fun',
+        changeOrigin: true
+      }
+    }
+  }
 });

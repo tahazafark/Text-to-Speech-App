@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Initialize Google Cloud client
-        putenv('GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/google-credentials.json');
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=/home/u205902587/credentials/google-credentials.json');
         
         // Make request to Google Cloud Text-to-Speech API
         $ch = curl_init('https://texttospeech.googleapis.com/v1/text:synthesize');

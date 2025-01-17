@@ -75,7 +75,7 @@ function App() {
         voiceName: selectedLang?.voice
       });
 
-      const response = await axios.post('/api/synthesize', {
+      const response = await axios.post('/api.php', {
         text,
         languageCode: selectedVoice,
         voiceName: selectedLang?.voice
